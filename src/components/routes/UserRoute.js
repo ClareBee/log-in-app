@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 //creates HOC
 const UserRoute = ({isAuthenticated, component: Component, ...rest}) => (
-  <Route {...rest} render={props => isAuthenticated ? <Component {...props} /> : <Redirect to="/" />} />
+  <Route {...rest} render={props => !isAuthenticated ? <Component {...props} /> : <Redirect to="/" />} />
 )
 UserRoute.propTypes = {
   component: PropTypes.func.isRequired,

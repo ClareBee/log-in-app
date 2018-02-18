@@ -7,7 +7,8 @@ import { logout } from '../../actions/auth'
 const Homepage = ({isAuthenticated, logout}) => (
   <div>
     <h1>Homepage</h1>
-    {isAuthenticated ? <button onClick={() => logout()}>Logout</button> : <Link to="/login">Login</Link>}
+    {isAuthenticated ? <button onClick={() => logout()}>Logout</button> :
+    <div> <Link to="/login">Login</Link> or <Link to="/signup">Sign up</Link></div>}
   </div>
 );
 Homepage.propTypes = {

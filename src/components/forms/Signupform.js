@@ -12,28 +12,25 @@ class Signupform extends React.Component {
     },
     loading: false,
     errors: {}
-  }
-  onSubmit= (e) => {
+  };
+  onSubmit = (e) => {
     e.preventDefault();
     const errors = this.validate(this.state.data);
-    this.setState({
-      errors
-    });
+    this.setState({ errors });
     if(Object.keys(errors).length === 0){
       this.setState({loading: true});
-      this.props.submit(this.state.data)
-        .catch(err => this.setState({errors: err.response.data.errors, loading: false}))
+      this.props
+        .submit(this.state.data)
+        .catch(err => this.setState({errors: err.response.data.errors, loading: false})
+      );
     }
   }
   validate = (data) => {
     const errors = {};
-    if(!isEmail(data.email)){
-      errors.email = 'invalid email';
-    }
-    if(!data.password){
-      errors.password = 'cannot be blank'
-    }
-  }
+    if(!isEmail(data.email)) errors.email = 'invalid email';
+    if(!data.password) errors.password = 'cannot be blank';
+    return errors;
+  };
   onChange = e =>
     this.setState({
       ...this.state,
