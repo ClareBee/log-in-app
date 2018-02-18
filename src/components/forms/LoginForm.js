@@ -27,6 +27,10 @@ class LoginForm extends React.Component {
   onSubmit = () => {
     const errors = this.validate(this.state.data);
     this.setState({ errors }); //if this object is empty, there aren't errors!
+    //or use isEmpty from lodash?
+    if(Object.keys(errors).length === 0){
+      this.props.submit(this.state.data);
+    }
   }
   validate = (data) => {
     const errors = {};
@@ -60,7 +64,9 @@ class LoginForm extends React.Component {
     );
   }
 }
+
 LoginForm.propTypes = {
   submit: PropTypes.func.isRequired
 };
+
 export default LoginForm;
