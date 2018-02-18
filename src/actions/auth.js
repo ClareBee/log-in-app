@@ -11,5 +11,7 @@ export const userLoggedIn = user => ({
 export const login = credentials => dispatch =>
 //api request -> get data -> dispatch redux action to change store
   api.user.login(credentials).then(user => {
+    //saves token in local storage
+    localStorage.bookwormJWT = user.token;
     dispatch(userLoggedIn(user))
   });
