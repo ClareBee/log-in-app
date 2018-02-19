@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './rootReducer';
 import App from './App';
+import decode from 'jwt-decode';
 import { userLoggedIn } from './actions/auth';
 import registerServiceWorker from './registerServiceWorker';
 import 'semantic-ui-css/semantic.min.css';
@@ -17,11 +18,12 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 );
 if(localStorage.bookwormJWT){
-  const user = { token: localStorage.bookwormJWT};
+  const payload = decode(localStorage.bookwormJWT);
+  const user = { token: localStorage.bookwormJWT, email: payload.email, confirmed: payload.confirmed};
   store.dispatch(userLoggedIn(user));
 }
 ReactDOM.render(
-  // route renders app and provides location/history etc - workaround 
+  // route renders app and provides location/history etc - workaround
   <BrowserRouter>
     <Provider store={store}><Route component={App} /></Provider>
   </BrowserRouter>

@@ -39,6 +39,12 @@ class Confirmationpage extends React.Component {
           <Link to="/dashboard">Go to your dashboard</Link>
         </Message.Content>
         </Message>}
+        {!loading && !success && <Message negative icon>
+        <Icon name="warning sign" />
+          <Message.Content>
+          <Message.Header>Oops, invalid token</Message.Header>
+        </Message.Content>
+        </Message>}
       </div>
     )
   }
