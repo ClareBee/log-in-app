@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Message } from 'semantic-ui-react';
-import ForgottenPasswordform from '../forms/ForgottenPasswordform'
+import ForgottenPasswordform from '../forms/ForgottenPasswordform';
+import { resetPasswordRequest } from '../../actions/auth';
 
 class ForgottenPasswordpage extends React.Component {
   state = {
@@ -21,4 +23,4 @@ class ForgottenPasswordpage extends React.Component {
   }
 }
 
-export default ForgottenPasswordpage;
+export default connect(null, { resetPasswordRequest })(ForgottenPasswordpage);
