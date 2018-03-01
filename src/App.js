@@ -8,7 +8,8 @@ import Loginpage from './components/pages/Loginpage';
 import Dashboardpage from './components/pages/Dashboardpage';
 import Signuppage from './components/pages/Signuppage';
 import Confirmationpage from './components/pages/Confirmationpage';
-import ForgotPasswordpage from './components/pages/ForgottenPasswordpage';
+import ForgottenPasswordpage from './components/pages/ForgottenPasswordpage';
+import ResetPasswordpage from './components/pages/ResetPasswordpage';
 import UserRoute from './components/routes/UserRoute';
 import GuestRoute from './components/routes/GuestRoute';
 
@@ -20,6 +21,8 @@ const App = ({location, isAuthenticated }) => <div className="ui container">
   <GuestRoute location={location} path="/login" exact component={Loginpage}></GuestRoute>
 
   <GuestRoute location={location} path="/forgot-password" exact component={ForgottenPasswordpage}></GuestRoute>
+  <GuestRoute location={location} path="/reset_password/:token" exact component={ResetPasswordpage}></GuestRoute>
+
   <GuestRoute location={location} path="/signup" exact component={Signuppage}></GuestRoute>
   <UserRoute location={location} path="/dashboard" exact component={Dashboardpage}></UserRoute>
 

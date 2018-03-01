@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Message } from 'semantic-ui-react';
 import InlineError from '../messages/InlineError';
 import isEmail from 'validator/lib/isEmail';
 
@@ -18,7 +18,7 @@ class ForgottenPasswordform extends React.Component {
       data: {...this.state.data, [e.target.name]: e.target.value}
     });
 
-  onSubmit = e =>
+  onSubmit = e => {
     e.preventDefault();
     const errors = this.validate(this.state.data);
     this.setState({ errors });
@@ -29,9 +29,10 @@ class ForgottenPasswordform extends React.Component {
         .catch(err => this.setState({ errors: err.response.data.errors, loading: false })
     );
   }
+}
   validate = data => {
     const errors = {};
-    if(!isEmail(data.email) errors.email = 'Invalid email';
+    if(!isEmail(data.email)) errors.email = 'Invalid email';
     return errors;
   }
 
@@ -39,23 +40,25 @@ class ForgottenPasswordform extends React.Component {
     const { errors, data, loading } = this.state;
     return(
       <Form onSubmit={this.onSubmit} loading={loading}>
+        {!!errors.global && <Message negative>{errors.global}</Message>}
         <Form.Field error={!!errors.email}>
-          <label htmlFor=email>Email</label>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
             name="email"
             placeholder="email"
-            value="data.email"
+            value={data.email}
             onChange={this.onChange}/>
-            {errors.email && <InlineError text={errors.email}}
+            {errors.email && <InlineError text={errors.email} />}
+          </Form.Field>
         <Button primary>ForgottenPasswordForm</Button>
       </Form>
     )
   }
 }
 ForgottenPasswordform.propTypes = {
-  submit: PropType.func.isRequired
+  submit: PropTypes.func.isRequired
 };
 
 export default ForgottenPasswordform;

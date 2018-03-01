@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import LoginForm from '../forms/LoginForm';
+import LoginForm from '../forms/LoginForm'; 
 import { login } from '../../actions/auth';
 import { Link } from 'react-router-dom';
 
