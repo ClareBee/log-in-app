@@ -31,6 +31,7 @@ class Signupform extends React.Component {
     if(!data.password) errors.password = 'cannot be blank';
     return errors;
   };
+
   onChange = e =>
     this.setState({
       ...this.state,
