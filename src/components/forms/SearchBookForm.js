@@ -24,7 +24,19 @@ class SearchBookForm extends React.Component {
       loading: true
     });
     axios.get(`/api/books/search?q=${this.state.query}`)
-    .then(res => res.data.books);
+    .then(res => res.data.books)
+    .then(books => {
+      const options = [];
+      const booksHash = {};
+      books.forEach(book => {
+        booksHash[book.goodreadsId] = book;
+        options.push({
+          key: book.goodreadsId,
+          value: book.goodreadsId,
+          text: book.title
+        })
+      })
+    })
   }
 
   onSearchChange = (e, data) => {
