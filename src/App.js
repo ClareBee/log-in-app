@@ -15,8 +15,8 @@ import GuestRoute from './components/routes/GuestRoute';
 import TopNavigation from './components/navigation/TopNavigation';
 
 
-const App = ({location}) => <div className="ui container">
-  <TopNavigation />
+const App = ({location, isAuthenticated}) => <div className="ui container">
+  {isAuthenticated && <TopNavigation />}
   <Route location={location} path="/" exact component={Homepage}></Route>
   <Route location={location} path="/confirmation/:token" exact component={Confirmationpage}></Route>
   <GuestRoute location={location} path="/login" exact component={Loginpage}></GuestRoute>
