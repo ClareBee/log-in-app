@@ -12,7 +12,7 @@ class NewBookpage extends React.Component {
         <h1>Add new book to your collection</h1>
         <SearchBookForm />
       </Segment>
-    )
+    );
   }
 }
 
