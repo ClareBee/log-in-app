@@ -31,11 +31,18 @@ class SearchBookForm extends React.Component {
     });
     this.timer = setTimeout(this.fetchOptions, 1000);
   }
-  
+
   render(){
     return(
       <Form>
-        <Dropdown search fluid placeholder="Search for book by title" value={this.state.query} onSearchChange={this.onSearchChange}></Dropdown>
+        <Dropdown
+          search
+          fluid
+          placeholder="Search for book by title"
+          value={this.state.query}
+          onSearchChange={this.onSearchChange}
+          options={this.state.options}
+          loading={this.state.loadin} />
       </Form>
     )
   }
