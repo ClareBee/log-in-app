@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Dropdown } from 'semantic-ui-react';
+import axios from 'axios';
 
 class SearchBookForm extends React.Component {
   state = {
@@ -22,6 +23,8 @@ class SearchBookForm extends React.Component {
     this.setState({
       loading: true
     });
+    axios.get(`/api/books/search?q=${this.state.query}`)
+    .then(res => res.data.books);
   }
 
   onSearchChange = (e, data) => {
