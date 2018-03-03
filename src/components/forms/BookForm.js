@@ -10,11 +10,8 @@ class BookForm extends React.Component {
       goodreadsId: this.props.book.goodreadsId,
       title: this.props.book.title,
       authors: this.props.book.authors,
-      cover: this.props.book.cover ,
-      pages: this.props.book.pages
+      covers: this.props.book.covers
     },
-    cover: this.props.book.cover,
-    index: 0,
     loading: false,
     errors: {}
   };
@@ -25,10 +22,8 @@ class BookForm extends React.Component {
         goodreadsId: props.book.goodreadsId,
         title: props.book.title,
         authors: props.book.authors,
-        cover: props.book.cover,
-        pages: props.book.pages
+        covers: props.book.covers
       },
-      cover: props.book.cover
     });
   }
 
@@ -65,18 +60,9 @@ class BookForm extends React.Component {
     const errors = {};
     if (!data.title) errors.title = "Can't be blank";
     if (!data.authors) errors.authors = "Can't be blank";
-    if (!data.pages) errors.pages = "Can't be blank";
     return errors;
   };
 
-  changeCover = () => {
-    const { index, covers } = this.state;
-    const newIndex = index + 1 >= covers.length ? 0 : index + 1;
-    this.setState({
-      index: newIndex,
-      data: { ...this.state.data, cover: covers[newIndex] }
-    });
-  };
   render() {
     const { errors, data, loading } = this.state;
     return (
@@ -99,7 +85,7 @@ class BookForm extends React.Component {
                 </Form.Field>
 
                 <Form.Field error={!!errors.authors}>
-                  <label htmlFor="authors">Book Authors</label>
+                  <label htmlFor="authors">Book Author</label>
                   <input
                     type="text"
                     id="authors"
@@ -111,22 +97,10 @@ class BookForm extends React.Component {
                   {errors.authors && <InlineError text={errors.authors} />}
                 </Form.Field>
 
-                <Form.Field error={!!errors.pages}>
-                  <label htmlFor="pages">Pages</label>
-                  <input
-                    disabled={data.pages === undefined}
-                    type="text"
-                    id="pages"
-                    name="pages"
-                    value={data.pages !== undefined ? data.pages : "Loading..."}
-                    onChange={this.onChangeNumber}
-                  />
-                  {errors.pages && <InlineError text={errors.pages} />}
-                </Form.Field>
               </Grid.Column>
 
               <Grid.Column>
-                <Image size="small" src={data.cover} />    
+                <Image size="small" src={data.covers} />
               </Grid.Column>
             </Grid.Row>
 
@@ -145,9 +119,7 @@ BookForm.propTypes = {
   book: PropTypes.shape({
     goodreadsId: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    authors: PropTypes.string.isRequired,
-    covers: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    pages: PropTypes.number
+    authors: PropTypes.string.isRequired
   }).isRequired
 };
 

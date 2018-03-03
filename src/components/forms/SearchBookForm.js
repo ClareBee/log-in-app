@@ -30,7 +30,6 @@ class SearchBookForm extends React.Component {
     this.setState({
       loading: true
     });
-    console.log(this.state.query)
     axios.get(`/api/books/search?q=${this.state.query.value.searchQuery}`)
     .then(res => res.data.books)
     .then(books => {
@@ -49,7 +48,6 @@ class SearchBookForm extends React.Component {
   }
 
   render(){
-    console.log(this.state.query)
     return(
       <Form>
         <Dropdown

@@ -18,6 +18,7 @@ class NewBookpage extends React.Component {
   }
 
   render(){
+    console.log(this.state.book)
     return(
       <Segment>
         <h1>Add new book to your collection</h1>
