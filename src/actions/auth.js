@@ -2,6 +2,7 @@
 import { USER_LOGGED_IN } from '../types';
 import { USER_LOGGED_OUT } from '../types';
 import api from '../api';
+import setAuthorizationHeader from '../utils/setAuthorizationHeader';
 
 //actions need to be handled by reducer - to place user data into state/remove it
 export const userLoggedIn = user => ({
@@ -17,12 +18,15 @@ export const login = credentials => dispatch =>
   api.user.login(credentials).then(user => {
     //saves token in local storage
     localStorage.bookwormJWT = user.token;
+    setAuthorizationHeader(user.token);
     dispatch(userLoggedIn(user));
   });
 
 export const logout = () => dispatch => {
     localStorage.removeItem('bookwormJWT');
     dispatch(userLoggedOut());
+    // no params = deletes token
+    setAuthorizationHeader();
   }
 
 export const confirm = (token) => dispatch =>
