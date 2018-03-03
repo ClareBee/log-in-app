@@ -10,10 +10,10 @@ class BookForm extends React.Component {
       goodreadsId: this.props.book.goodreadsId,
       title: this.props.book.title,
       authors: this.props.book.authors,
-      cover: this.props.book.covers[0],
+      cover: this.props.book.cover ,
       pages: this.props.book.pages
     },
-    covers: this.props.book.covers,
+    cover: this.props.book.cover,
     index: 0,
     loading: false,
     errors: {}
@@ -25,10 +25,10 @@ class BookForm extends React.Component {
         goodreadsId: props.book.goodreadsId,
         title: props.book.title,
         authors: props.book.authors,
-        cover: props.book.covers[0],
+        cover: props.book.cover,
         pages: props.book.pages
       },
-      covers: props.book.covers
+      cover: props.book.cover
     });
   }
 
@@ -126,12 +126,7 @@ class BookForm extends React.Component {
               </Grid.Column>
 
               <Grid.Column>
-                <Image size="small" src={data.cover} />
-                {this.state.covers.length > 1 && (
-                  <a role="button" tabIndex={0} onClick={this.changeCover}>
-                    Another cover
-                  </a>
-                )}
+                <Image size="small" src={data.cover} />    
               </Grid.Column>
             </Grid.Row>
 

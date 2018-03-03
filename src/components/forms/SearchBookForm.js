@@ -7,24 +7,31 @@ class SearchBookForm extends React.Component {
   state = {
     query: '',
     loading: false,
-    options: [{
-      key: 1,
-      value: 1,
-      text: 'some book'
-    },
-    {
-      key: 2,
-      value: 2,
-      text: 'another book'
-    }],
+    options: [],
     books: {}
   }
+  onSearchChange = (e, data) => {
+    clearTimeout(this.timer);
+    this.setState({
+      query: data
+    });
+    this.timer = setTimeout(this.fetchOptions, 1000);
+  }
+
+  onChange = (e, data) => {
+    this.setState({
+      query: data.value
+    })
+    this.props.onBookSelect(this.state.books[data.value])
+  }
+
   fetchOptions = () => {
     if(!this.state.query) return;
     this.setState({
       loading: true
     });
-    axios.get(`/api/books/search?q=${this.state.query}`)
+    console.log(this.state.query)
+    axios.get(`/api/books/search?q=${this.state.query.value.searchQuery}`)
     .then(res => res.data.books)
     .then(books => {
       const options = [];
@@ -41,22 +48,8 @@ class SearchBookForm extends React.Component {
     });
   }
 
-  onSearchChange = (e, data) => {
-    clearTimeout(this.timer);
-    this.setState({
-      query: data
-    });
-    this.timer = setTimeout(this.fetchOptions, 1000);
-  }
-
-  onChange = (e, data) => {
-    this.setState({
-      query: data.value
-    })
-    this.props.onBookSelect(this.state.books[data.value])
-  }
-
   render(){
+    console.log(this.state.query)
     return(
       <Form>
         <Dropdown
@@ -66,7 +59,7 @@ class SearchBookForm extends React.Component {
           value={this.state.query}
           onSearchChange={this.onSearchChange}
           options={this.state.options}
-          loading={this.state.loadin}
+          loading={this.state.loading}
           onChange={this.onChange}/>
       </Form>
     )
