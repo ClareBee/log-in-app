@@ -10,7 +10,8 @@ class BookForm extends React.Component {
       goodreadsId: this.props.book.goodreadsId,
       title: this.props.book.title,
       authors: this.props.book.authors,
-      covers: this.props.book.covers
+      cover: this.props.book.covers[0],
+      pages: this.props.book.pages
     },
     loading: false,
     errors: {}
@@ -22,7 +23,8 @@ class BookForm extends React.Component {
         goodreadsId: props.book.goodreadsId,
         title: props.book.title,
         authors: props.book.authors,
-        covers: props.book.covers
+        cover: props.book.covers[0],
+        pages: props.book.pages
       },
     });
   }
@@ -56,6 +58,16 @@ class BookForm extends React.Component {
     }
   };
 
+  changeCover = () => {
+  const { index, covers } = this.state;
+  const newIndex = index + 1 >= covers.length ? 0 : index + 1;
+  this.setState({
+    index: newIndex,
+    data: { ...this.state.data, cover: covers[newIndex] }
+  });
+}
+
+
   validate = data => {
     const errors = {};
     if (!data.title) errors.title = "Can't be blank";
@@ -64,6 +76,7 @@ class BookForm extends React.Component {
   };
 
   render() {
+    console.log(this.props)
     const { errors, data, loading } = this.state;
     return (
       <Segment>
@@ -100,9 +113,24 @@ class BookForm extends React.Component {
               </Grid.Column>
 
               <Grid.Column>
-                <Image size="small" src={data.covers} />
+                <Image size="small" src={data.cover} />
               </Grid.Column>
             </Grid.Row>
+
+            <Form.Field error={!!errors.pages}>
+              <label htmlFor="pages">Pages</label>
+              <input
+                disabled={data.pages === undefined}
+                type="text"
+                id="pages"
+                name="pages"
+                placeholder="Pages"
+                onChange={this.onChangeNumber}
+                value={data.pages !== undefined ? data.pages : "Loading..."}
+
+              />
+              {errors.pages && <InlineError text={errors.pages} />}
+            </Form.Field>
 
             <Grid.Row>
               <Button primary>Save</Button>

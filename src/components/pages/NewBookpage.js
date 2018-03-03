@@ -1,7 +1,12 @@
 import React from 'react';
+import axios from 'axios';
+import { connect } from "react-redux";
 import { Segment } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 import SearchBookForm from '../forms/SearchBookForm';
 import BookForm from '../forms/BookForm';
+import { createBook } from "../../actions/books";
+
 
 class NewBookpage extends React.Component {
   state = {
@@ -9,16 +14,19 @@ class NewBookpage extends React.Component {
   }
 
   onBookSelect = (book) => {
-    this.setState({
-      book
-    });
-  }
-  addBook = () => {
-    console.log('hi')
+    this.setState({book});
+    axios.get(`/api/books/fetchPages?goodreadsId=${book.goodreadsId}`)
+      .then(res => res.data.pages)
+      .then(pages => this.setState({book: {...book, pages}}));
   }
 
-  render(){
-    console.log(this.state.book)
+  addBook = book => {
+    this.props
+      .createBook(book)
+      .then(() => this.props.history.push("/dashboard"));
+  }
+
+  render() {
     return(
       <Segment>
         <h1>Add new book to your collection</h1>
@@ -29,4 +37,11 @@ class NewBookpage extends React.Component {
   }
 }
 
-export default NewBookpage;
+NewBookpage.propTypes = {
+  createBook: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
+};
+
+export default connect(null, { createBook })(NewBookpage);
